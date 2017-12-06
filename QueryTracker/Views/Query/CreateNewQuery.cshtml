@@ -1,0 +1,63 @@
+﻿@model CreateQueryViewModel
+
+@{
+	ViewData["Title"] = "CreateNewQuery";
+	string ActionMethodName = "CreateNewQuery";
+	if(Model.QueryId.HasValue)
+	{
+		ActionMethodName = "EditQuery";
+	}
+}
+
+<h2>Create New Query</h2>
+
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="@ActionMethodName" method="post">
+			<h4>Create a new account.</h4>
+			<hr />
+			<div asp-validation-summary="All" class="text-danger"></div>
+			@Html.HiddenFor(model => model.QueryId)
+			<div class="form-group">
+				<label asp-for="QueryTitle"></label>
+				<input asp-for="QueryTitle" class="form-control" />
+				<span asp-validation-for="QueryTitle" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="QueryType"></label>
+				<select id="queryType" class="form-control" asp-for="QueryType" asp-items="ViewBag.QueryType"></select>
+				<span asp-validation-for="QueryType" class="text-danger"></span>
+			</div>
+			@if(Model.QueryId.HasValue)
+			{
+				<div class="form-group">
+					<label asp-for="QueryStatus"></label>
+					<select id="queryType" class="form-control" asp-for="QueryStatus" asp-items="ViewBag.QueryStatus"></select>
+					<span asp-validation-for="QueryStatus" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="Invoice"></label>
+					<input asp-for="Invoice" class="form-control" />
+					<span asp-validation-for="Invoice" class="text-danger"></span>
+				</div>
+
+			}
+
+			<div class="form-group">
+				<label asp-for="Description"></label>
+				<textarea asp-for="Description" rows="15" class="form-control"></textarea>
+				<span asp-validation-for="Description" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="UserId"></label>
+				<select id="userId" class="form-control" asp-for="UserId" asp-items="ViewBag.EmployeeList"></select>
+				<span asp-validation-for="QueryType" class="text-danger"></span>
+			</div>
+
+			<button type="submit" class="btn btn-default">Create Query</button>
+		</form>
+	</div>
+</div>

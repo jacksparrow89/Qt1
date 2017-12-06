@@ -1,0 +1,69 @@
+﻿@model IEnumerable<QueryHistoryTableViewModel>
+
+@using Microsoft.AspNetCore.Identity
+@using QueryTracker.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+	ViewData["Title"] = "ViewQueryHistory";
+
+	string ActionMethodName = "ViewAllQueries";
+	if(UserManager.GetUserAsync(User).Result.Designation != 1000)
+	{
+		ActionMethodName = "ViewEmployeeQueries";
+	}
+}
+
+<h2>Query History</h2>
+
+<div class="form-group">
+	<a asp-action="@ActionMethodName" asp-controller="Query" class="btn btn-default">Back</a> 
+</div>
+
+<h3>@Model.First().QueryTitle</h3>
+<table class="table table-condensed table-striped table-responsive">
+	<thead>
+	<tr data-item-id="">
+		<th>
+			@Html.DisplayNameFor(model => model.QueryType)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.QueryStatus)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Description)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.UserName)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.ChangeDate)
+		</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	@foreach (QueryHistoryTableViewModel item in Model)
+	{
+		<tr id="">
+			<td>
+				@Html.DisplayFor(model => item.QueryType)
+			</td>
+			<td>
+				@Html.DisplayFor(model => item.QueryStatus)
+			</td>
+			<td>
+				@Html.DisplayFor(model => item.Description)
+			</td>
+			<td>
+				@Html.DisplayFor(model => item.UserName)
+			</td>
+			<td>
+				@Html.DisplayFor(model => item.ChangeDate)
+			</td>
+		</tr>
+	}
+	</tbody>
+</table>

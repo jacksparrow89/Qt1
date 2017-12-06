@@ -1,0 +1,79 @@
+﻿@model IEnumerable<QueryTableViewModel>
+@{
+	ViewData["Title"] = "ViewAllQueries";
+}
+
+<h2>All queries</h2>
+
+<div class="form-group">
+	<a asp-action="CreateNewQuery" asp-controller="Query" class="btn btn-default">Add New Query</a>
+</div>
+
+<form asp-action="ViewAllQueries" method="get">
+	<div class="form-actions no-color">
+		<p>
+			Find by Title: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+			Find by User: <select name="UserName" value="@ViewData["userName"]" asp-items="ViewBag.EmployeeList"></select>
+			<input type="submit" value="Search" class="btn btn-default" />
+		</p>
+		
+
+	</div>
+</form>
+
+	<table class="table table-condensed table-striped table-responsive">
+		<thead>
+			<tr data-item-id="">
+				<th>
+					@Html.DisplayNameFor(model => model.QueryId)
+				</th>
+				<th>
+					<a asp-action="ViewAllQueries" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.ReceivedDate)</a>
+				</th>
+				<th>
+					<a asp-action="ViewAllQueries" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.QueryTitle)</a>
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.QueryStatus)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.QueryType)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.UserName)
+				</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			@foreach (QueryTableViewModel item in Model)
+			{
+				<tr id="@item.QueryId">
+					<td>
+						@Html.DisplayFor(model => item.QueryId)
+					</td>
+					<td>
+						@Html.DisplayFor(model => item.ReceivedDate)
+					</td>
+					<td>
+						@Html.DisplayFor(model => item.QueryTitle)
+					</td>
+					<td>
+						@Html.DisplayFor(model => item.QueryStatus)
+					</td>
+					<td>
+						@Html.DisplayFor(model => item.QueryType)
+					</td>
+					<td>
+						@Html.DisplayFor(model => item.UserName)
+					</td>
+					<td>
+						<a asp-action="EditQuery" asp-controller="Query" asp-route-id="@item.QueryId">Edit</a>
+					</td>
+					<td>
+						<a asp-action="ViewQueryHistory" asp-controller="Query" asp-route-id="@item.QueryId">View History</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
