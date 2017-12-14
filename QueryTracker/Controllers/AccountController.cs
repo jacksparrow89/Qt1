@@ -206,7 +206,6 @@ namespace QueryTracker.Controllers
         }
 
         [HttpGet]
-        [Authorize(PolicyConstants.AdminOnlyPolicy)]
 		public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -216,7 +215,6 @@ namespace QueryTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(PolicyConstants.AdminOnlyPolicy)]
 		public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
